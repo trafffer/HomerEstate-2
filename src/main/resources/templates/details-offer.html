@@ -111,7 +111,9 @@
                                 <div class="form-group clearfix mb-0">
                                     <div class="d-flex justify-content-center mt-4">
                                         <button class="btn btn-primary ts-btn-arrow btn-lg float-right"
-                                                type="submit">Add comment</button>
+                                                type="submit" value="add this form"
+                                                onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';"
+                                        >Add comment</button>
                                     </div>
                                 </div>
                                 </div>
@@ -126,10 +128,10 @@
                             <a id="print-button" href="https://www.homerestate.gr/en/propertyDetails/10915949?forPrint=1" class="btn btn-light mr-2 w-100" data-toggle="tooltip" data-placement="top" title="" data-original-title="Print">
                                 <i class="fa fa-print"></i>
                             </a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.homerestate.gr/en/propertyDetails/10915949" class="btn btn-light mr-2 w-100 fbShareListingAction" data-toggle="tooltip" data-placement="top" title="" onclick="javascript:window.open(this.href, 'pop', 'width=600, height=400, scrollbars=no');return false;" rel="nofollow" data-original-title="Facebook Share">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.homerestate.gr/en/propertyDetails/10915949" class="btn btn-light mr-2 w-100 fbShareListingAction" data-toggle="tooltip" data-placement="top" title="" onclick="window.open(this.href, 'pop', 'width=600, height=400, scrollbars=no');return false;" rel="nofollow" data-original-title="Facebook Share">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://twitter.com/share?url=https://www.homerestate.gr/en/propertyDetails/10915949&amp;text=Apartment for sale" class="btn btn-light mr-2 w-100" data-toggle="tooltip" data-placement="top" title="" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=570,width=520');return false;" rel="nofollow" data-original-title="Twitter Share">
+                            <a href="https://twitter.com/share?url=https://www.homerestate.gr/en/propertyDetails/10915949&amp;text=Apartment for sale" class="btn btn-light mr-2 w-100" data-toggle="tooltip" data-placement="top" title="" onclick="window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=570,width=520');return false;" rel="nofollow" data-original-title="Twitter Share">
                                 <i class="fab fa-twitter"></i>
                             </a>
                         </div>
@@ -194,11 +196,11 @@
                         <h3 th:unless="${commentsList.isEmpty()}">Comments</h3>
                         <div th:each="c : ${commentsList}" th:object="${c}" class="input-group mb-3">
                             <label th:text="|Added by *{authorUsername} on *{createdOn}|"></label>
-                            <div th:text="*{textContent}"  id="comment" name="name" type="text"
+                            <div th:text="*{textContent}"  id="comment"  type="text"
                                    class="form-control validate col-xl-7 col-lg-7 col-md-7 col-sm-7"
                             style="border-radius: 0.185rem">
                             </div>
-                            <div th:text="|Reserved time for visit: *{timeForVisit}|"  id="visit" name="name" type="text"
+                            <div th:text="|Reserved time for visit: *{timeForVisit}|"  id="visit" type="text"
                                    class="form-control validate col-xl-5 col-lg-5 col-md-5 col-sm-5"
                                    style="border-radius: 0.185rem">
                             </div>

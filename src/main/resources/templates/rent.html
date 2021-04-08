@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/fragment::head}">
     <title>Sale page</title>
 </head>
@@ -20,10 +19,9 @@
                 <div  th:each="r : ${rents}" th:object="${r}"
                       class="col-sm-6 col-lg-4">
                     <a th:href="@{/comments/search/{id}(id=*{id})}" class="card ts-item ts-card ts-item__lg">
-                        <img class="card-img-top  ts-item__image ts-item-tpp"
+                        <img class="card-img-top  ts-item__image ts-item-tpp" alt=""
                              th:src="*{imgUrl}" data-holder-rendered="true"
                              style="height: 225px; width: 100%; display: block;">
-                        </img>
                         <div class="card-body">
                             <div th:text="|€ *{price}|"
                                  th:value="*{price}"
