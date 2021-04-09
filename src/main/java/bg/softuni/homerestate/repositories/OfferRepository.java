@@ -16,10 +16,8 @@ import java.util.List;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer,Long> {
-//    Това Native Query се изключва, когато се правят интеграционни тестове, понеже има проблем с базата.
-//    Тогава използвам JPQL метода, който връща всички Offer, подредени по посещения, намаляващо!!
-    @Query(value = "SELECT * FROM homerestatedb.offers  as o ORDER BY o.visited DESC LIMIT 9",nativeQuery = true)
-//    @Query("select o FROM Offer o ORDER BY o.visited DESC")
+//    @Query(value = "SELECT * FROM homerestatedb.offers  as o ORDER BY o.visited DESC LIMIT 9",nativeQuery = true)
+    @Query("select o FROM Offer o ORDER BY o.visited DESC")
     List<Offer> findAllOrderByVisitedDesc();
 
     List<Offer> findAllByTypeOrderByVisitedDesc(Type type);

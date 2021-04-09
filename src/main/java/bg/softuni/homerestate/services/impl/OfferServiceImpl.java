@@ -56,7 +56,13 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferViewModel> loadViewModels() {
-        List<Offer> offers = offerRepository.findAllOrderByVisitedDesc();
+        long max;
+        if (offerRepository.count()>9){
+            max=9;
+        }else{
+            max=offerRepository.count();
+        }
+        List<Offer> offers = offerRepository.findAllOrderByVisitedDesc().subList(0,(int)max);
         List<OfferServiceModel> models = collectOfferServiceModels(offers);
         return mapToOfferViewModel(models);
     }
