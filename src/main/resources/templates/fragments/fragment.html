@@ -93,6 +93,9 @@
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-type="admin">
                         <a class="nav-link mr-2" href="/roles/add" style="font-size: large">Admin</a>
                     </li>
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item" data-type="editUser">
+                        <a class="nav-link mr-2" href="/users/edit" style="font-size: large">My account</a>
+                    </li>
                     <li class="nav-item" data-type="entrustmentEnquiry">
                         <a class="nav-link mr-2" href="/about" style="font-size: large">About us</a>
                     </li>

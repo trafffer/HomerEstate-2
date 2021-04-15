@@ -1,6 +1,5 @@
 package bg.softuni.homerestate.services.impl;
 
-import bg.softuni.homerestate.models.entities.Offer;
 import bg.softuni.homerestate.models.entities.OfferComment;
 import bg.softuni.homerestate.models.service.CommentServiceModel;
 import bg.softuni.homerestate.models.view.CommentViewModel;
@@ -8,20 +7,14 @@ import bg.softuni.homerestate.repositories.CommentRepository;
 import bg.softuni.homerestate.services.CommentService;
 import bg.softuni.homerestate.services.OfferService;
 import bg.softuni.homerestate.services.UserService;
-import org.attoparser.dom.Comment;
 import org.modelmapper.ModelMapper;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,7 +53,6 @@ public class CommentServiceImpl implements CommentService {
                 .map(c -> {
                    CommentViewModel comment =  mapper.map(c, CommentViewModel.class);
                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                   comment.setTimeForVisit(c.getTimeForVisit().format(formatter));
                    comment.setCreatedOn(c.getCreatedOn().format(formatter));
                    return comment;
                 })
@@ -76,12 +68,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Scheduled(cron = "0 0 4 * * *")
     public void deleteOldComments(){
-        List<OfferComment>oldComments= commentRepository.findAllByTimeForVisitBefore(LocalDateTime.now());
+        List<OfferComment>oldComments=
+                commentRepository.findAllByCreatedOnBefore(LocalDateTime.now().minusDays(7));
         if (oldComments.isEmpty()){
             return;
         }
         for (OfferComment comment : oldComments) {
-            deleteById(comment.getId());
+            commentRepository.deleteById(comment.getId());
         }
     }
 }

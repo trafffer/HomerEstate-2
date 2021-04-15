@@ -133,7 +133,7 @@ public class CommentServiceTest {
 
         OfferComment comment = new OfferComment();
         comment.setCreatedOn(LocalDateTime.now()).setAuthor(author);
-        comment.setOffer(offer).setTextContent("text4").setTimeForVisit(LocalDateTime.now());
+        comment.setOffer(offer).setTextContent("text4");
 
         CommentViewModel serviceModel = new CommentViewModel();
         serviceModel.setAuthorUsername("nasko").setOfferId(0L)
@@ -162,9 +162,8 @@ public class CommentServiceTest {
                 offer.setId(1L);
         OfferComment comment = new OfferComment();
         comment.setOffer(offer)
-                .setTimeForVisit(LocalDateTime.of(2020,5,22,13,14,5))
                 .setTextContent("dddd");
-        Mockito.when(mockCommentRepository.findAllByTimeForVisitBefore(any()))
+        Mockito.when(mockCommentRepository.findAllByCreatedOnBefore(any()))
                 .thenReturn(List.of(comment.setOffer(offer)));
         serviceToBeTested.deleteOldComments();
         Mockito.verify(mockCommentRepository,times(1)).deleteByOfferId(null);
@@ -176,9 +175,8 @@ public class CommentServiceTest {
         offer.setId(1L);
         OfferComment comment = new OfferComment();
         comment.setOffer(offer)
-                .setTimeForVisit(LocalDateTime.of(2025,5,22,13,14,5))
                 .setTextContent("dddd");
-        Mockito.when(mockCommentRepository.findAllByTimeForVisitBefore(any()))
+        Mockito.when(mockCommentRepository.findAllByCreatedOnBefore(any()))
                 .thenReturn(new ArrayList<>());
         serviceToBeTested.deleteOldComments();
         Mockito.verifyNoInteractions(mockOfferService);

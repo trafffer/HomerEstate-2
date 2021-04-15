@@ -1,7 +1,10 @@
 package bg.softuni.homerestate.web;
 
 import bg.softuni.homerestate.models.binding.UserRegisterBindingModel;
+import bg.softuni.homerestate.models.entities.UserEntity;
 import bg.softuni.homerestate.models.service.UserServiceModel;
+import bg.softuni.homerestate.models.view.UserViewModel;
+import bg.softuni.homerestate.services.HomerDBUserService;
 import bg.softuni.homerestate.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -49,6 +52,7 @@ public class UserController {
         if (!model.containsAttribute("userModel")){
             model.addAttribute("userModel",new UserRegisterBindingModel());
             model.addAttribute("userExist",false);
+            model.addAttribute("emailExist",false);
         }
         return "register";
     }
@@ -57,19 +61,30 @@ public class UserController {
     public String registerConfirm(@Valid UserRegisterBindingModel userModel,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes){
-        if (bindingResult.hasErrors()){
+        if (userService.userExist(userModel.getUsername())){
+            redirectAttributes.addFlashAttribute("userExist", true);
+        }else{
+            redirectAttributes.addFlashAttribute("userExist", false);
+        }
+        if (userService.emailExist(userModel.getEmail())){
+            redirectAttributes.addFlashAttribute("emailExist", true);
+        }else{
+            redirectAttributes.addFlashAttribute("emailExist", false);
+        }
+        if (bindingResult.hasErrors()||redirectAttributes.getFlashAttributes().containsValue(true)){
             redirectAttributes.addFlashAttribute("userModel",userModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel",bindingResult);
             return "redirect:/users/register";
         }
-        if (userService.userExist(userModel.getUsername())){
-           redirectAttributes.addFlashAttribute("userModel",userModel);
-           redirectAttributes.addFlashAttribute("userExist", true);
-           return "redirect:/users/register";
-        }
         UserServiceModel userServiceModel = mapper.map(userModel,UserServiceModel.class);
         userService.registerAndLogin(userServiceModel);
         return "redirect:/";
+    }
+
+    @GetMapping("/edit")
+    public String editProfile(){
+        UserViewModel userModel = userService.loadViewModel();
+        return "edit-user";
     }
 
 
