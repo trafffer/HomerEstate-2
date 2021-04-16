@@ -7,8 +7,6 @@ import bg.softuni.homerestate.models.entities.enums.Type;
 import bg.softuni.homerestate.models.entities.enums.UserRole;
 import bg.softuni.homerestate.models.service.CommentServiceModel;
 import bg.softuni.homerestate.models.view.CommentViewModel;
-import bg.softuni.homerestate.models.view.OfferDetailsViewModel;
-import bg.softuni.homerestate.models.view.OfferViewModel;
 import bg.softuni.homerestate.repositories.CommentRepository;
 import bg.softuni.homerestate.services.OfferService;
 import bg.softuni.homerestate.services.UserService;
@@ -22,14 +20,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
@@ -166,9 +162,8 @@ public class CommentServiceTest {
         Mockito.when(mockCommentRepository.findAllByCreatedOnBefore(any()))
                 .thenReturn(List.of(comment.setOffer(offer)));
         serviceToBeTested.deleteOldComments();
-        Mockito.verify(mockCommentRepository,times(1)).deleteByOfferId(null);
+        Mockito.verify(mockCommentRepository,times(1)).deleteById(any());
     }
-
     @Test
     public void testSheduledDeleteEmpty() throws InterruptedException {
         Offer offer = new Offer();

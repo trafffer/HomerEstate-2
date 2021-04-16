@@ -74,4 +74,34 @@ public class OfferServiceTest {
         Mockito.verify(mapper,Mockito.times(1)).map(testModel,Offer.class);
         Mockito.verify(mockOfferRepository,Mockito.times(1)).save(offer);
     }
+
+    @Test
+    public void editOfferTest(){
+        UserRoleEntity role = new UserRoleEntity();
+        role.setRole(UserRole.USER);
+        UserEntity author = new UserEntity();
+        author.setUsername("Nasko");
+        author.setRoles(List.of(role)).setPassword("pppp")
+                .setEmail("koko@mail.bg").setFullName("Atanas").setId(0L);
+        CategoryEntity category = new CategoryEntity();
+        category.setName(Category.HOUSE);
+        Offer offer = new Offer();
+        offer.setAuthor(author).setAddress("ffffff").setPrice(BigDecimal.valueOf(1800.00))
+                .setCreatedOn(LocalDateTime.now()).setImgUrl("iiiiii").setCategory(category)
+                .setType(Type.SALE).setCity(City.BLAGOEVGRAD).setArea(144).setFloor(1)
+                .setRooms(5).setDescription("ddddd").setId(1L);
+        OfferServiceModel testModel = new OfferServiceModel();
+        testModel.setArea(144).setAuthor(author).setCity(City.BLAGOEVGRAD)
+                .setCategory(category.getName())
+                .setCreatedOn(LocalDateTime.now()).setFloor(1).setId(1L).setDescription("ddddd")
+                .setPrice(BigDecimal.valueOf(1444444)).setPricePerSqM(BigDecimal.valueOf(14440))
+                .setRooms(5).setType(Type.SALE).setVisited(0);
+        testModel.setAddress("thisForTest");
+
+        Mockito.when(mockOfferRepository.save(offer)).thenReturn(new Offer());
+        Mockito.when(mockOfferRepository.findById(1L)).thenReturn(java.util.Optional.of(offer));
+        serviceForTest.editOffer(testModel,1L);
+        Mockito.verify(mockOfferRepository,Mockito.times(1)).findById(1L);
+        Mockito.verify(mockOfferRepository,Mockito.times(1)).save(offer);
+    }
 }

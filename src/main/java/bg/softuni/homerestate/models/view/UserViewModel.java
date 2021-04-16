@@ -1,16 +1,12 @@
 package bg.softuni.homerestate.models.view;
 
-import bg.softuni.homerestate.models.entities.UserRoleEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserViewModel {
     private String username;
     private String fullName;
     private String password;
     private String email;
-    private List<UserRoleEntity> roles=new ArrayList<>();
+
 
     public UserViewModel() {
     }
@@ -51,12 +47,4 @@ public class UserViewModel {
         return this;
     }
 
-    public List<UserRoleEntity> getRoles() {
-        return roles;
-    }
-
-    public UserViewModel setRoles(List<UserRoleEntity> roles) {
-        this.roles = roles;
-        return this;
-    }
 }

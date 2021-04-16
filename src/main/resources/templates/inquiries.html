@@ -2,177 +2,147 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/fragment::head}">
-    <title>Inquiries page</title>
+    <title>Inquiries</title>
+</head>
 <body>
 <header th:replace="~{fragments/fragment::navbar}">
 </header>
 <main id="ts-main" style="margin-top: 116px;">
-    <div class="splitPage">
-        <div class="splitPage__column left" style="height:auto; background-image:url('/img/fition3.jpg')">
-            <div class="splitPage__column__inner">
-                <section id="page-title" class="page-title">
-                    <div class="ts-title">
-                        <h1 class="text-center text-dark" style="font-size: 64px;
-                            -webkit-text-fill-color: #f4f4f4;
-                            width: 100%;">Offer Inquiry</h1>
-                    </div>
-                </section>
+    <section id="featured-properties" class="ts-block pt-5"
+             th:style="'background-image: url(/img/search.jpg)'">
+        <div class="container">
+            <!--Title-->
+            <div class="ts-title text-center" style="margin-bottom:1rem;">
+                <h1 class="border-bottom text-center text-light" style="background: #4b88a6">My offers</h1>
             </div>
-        </div>
-        <div class="splitPage__column right" style="padding-top:0;">
-            <div class="splitPage__column__inner" style="padding-bottom:0;">
-                <section id="submit-form" style="margin-bottom:0">
-                    <form method="POST" th:action="@{/inquiries/add/{id}(id=${offerModel})}"
-                          th:object="${inquiryModel}"    class="ts-form custom-form" >
-                        <section id="basic-information" class="" style="margin-bottom:1rem;">
-                            <h3 class="border-bottom">Add an inquiry for offer</h3>
-                            <div class="row">
-                                <div class="col-sm-8 col-sm-8 col-md-8 col-lg-8">
-                                    <div class="form-group alt">
-                                        <label>Offer: </label>
-                                        <div class="input-group disabled" th:text="|ID: ${offerModel}|">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-sm-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="category">Category*</label>
-                                        <select class="custom-select ts-selected"
-                                                id="category"
-                                                style="width:100%"
-                                                name="category"
-                                                aria-invalid="false">
-                                            <option value="" selected="selected">Select category</option>
-                                            <option value="residential">Residential</option>
-                                        </select>
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded">
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-sm-4 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="city">City*</label>
-                                        <select class="custom-select ts-selected"
-                                                id="city"
-                                                style="width:100%" name="city"
-                                                aria-invalid="false">
-                                            <option value="" selected="selected">Select city</option>
-                                            <option value="apartment">City</option>
-                                            </select>
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                              >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 col-sm-8 col-md-8 col-lg-8">
-                                    <div class="input-group">
-                                        <label for="address">Address</label>
-                                        <input class="form-control"
-                                               placeholder="Addres in the city"
-                                               name="livingArea"
-                                               type="text"
-                                               id="address">
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                               >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-sm-4 col-md-4 col-lg-4">
-                                    <div class="input-group">
-                                        <label for="area">Living Area in sq.m.</label>
-                                        <input
-                                                class="form-control border-right-0"
-                                                placeholder="Living Area in sq.m."
-                                                name="area"
-                                                type="text"
-                                                id="area">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-white border-left-0">sq.m.</span>
-                                        </div>
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                               >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-sm-2 col-md-4 col-lg-2">
-                                    <div class="input-group">
-                                        <label for="rooms">Rooms</label>
-                                        <input
-                                                class="form-control"
-                                                placeholder="Rooms#"
-                                                name="rooms"
-                                                type="text"
-                                                id="rooms">
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                               >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-sm-2 col-md-4 col-lg-2">
-                                    <div class="input-group">
-                                        <label for="floor">Floor</label>
-                                        <input
-                                                class="form-control"
-                                                placeholder="Floor#"
-                                                name="floor"
-                                                type="text"
-                                                id="floor">
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                              >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-sm-4 col-md-6 col-lg-4">
-                                    <div class="input-group">
-                                        <label for="price">Price</label>
-                                        <input class="form-control border-right-0" placeholder="Price" name="price" type="text" id="price">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-white border-left-0">€</span>
-                                        </div>
-                                        <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                               >
-                                            Neshto gadno.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="form-group">
-                                                <label for="description">Description</label>
-                                                <textarea
-                                                       class="form-control"
-                                                       placeholder="Description"
-                                                          cols="50" rows="10"
-                                                       type="text"
-                                                          id="description"></textarea>
-                                                <small class="invalid-feedback text-light form-text bg-danger rounded"
-                                                       >
-                                                    Neshto gadno.
-                                                </small>
-                                            </div>
-                                </div>
-                            </div>
-                        </section>
-                        <div class="d-flex justify-content-center mt-4">
-                            <button type="submit" class="btn btn-primary ts-btn-arrow btn-lg float-right"
-                                    id="btnSubmit" name="button" value="add this form"
-                                    onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';">Submit Inquiry</button>
+            <div class="row" id="offerList">
+                <div class="col-sm-6 col-md-6 col-lg-4"
+                     th:each="o : ${offers}" th:object="${o}">
+                    <div class="card ts-item ts-card ts-item__lg">
+                        <div id="offerId#1" th:value="*{id}" th:text="|Offer ID: *{id}|">
                         </div>
-                    </form>
-                    <!--end #form-submit-->
-                </section>
+                        <a th:href="@{/comments/search/{id}(id=*{id})}">
+                        <img class="card-img-top  ts-item__image ts-item-tpp" alt="" th:src="*{imgUrl}" data-holder-rendered="true"
+                             style="height: 225px; width: 100%; display: block;">
+                        </a>
+                        <div class="card-body">
+                            <div th:text="|€ *{price}|"
+                                 th:value="*{price}"
+                                 class="ts-item__info-badge">
+                                € 69,000
+                            </div>
+                            <figure class="ts-item__info" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%)">
+                                <h4 th:text="|*{category} for *{type}|">Apartment for sale</h4>
+                                <aside>
+                                    <i class="fa fa-map-marker mr-2">
+                                        <i th:text="|  *{city}, *{address}|" style="font-style: normal; font-weight: normal"></i></i>
+                                </aside>
+                            </figure>
+                            <div class="ts-description-lists">
+                                <dl>
+                                    <dt>Area</dt>
+                                    <dd th:text="|*{area} m²|"
+                                    >34 m²</dd>
+                                </dl>
+                                <dl>
+                                    <dt th:text="|Price per sq.m|">Rooms</dt>
+                                    <dd th:text="|*{pricePerSqM}€/m²|"
+                                    >1</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="navbar-toggler"
+                                    th:id="|clickable${o.id}|"
+                                    type="button"
+                                    th:value="*{id}" onclick="clickable(this.value)">
+                            <span class="ts-btn-arrow">Inquiries</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12" th:id="|offerList${o.id}|" style="margin-top: 60px">
+                    </div>
             </div>
-            <!--end container-->
+            </div>
+            <!--end row-->
         </div>
-        <div class="clearfix"></div>
-    </div>
+        <!--end container-->
+    </section>
 </main>
 <footer th:replace="~{fragments/fragment::footer}">
 </footer>
+<script type="text/javascript">
+    function clickable (id) {
+        const searchBar = document.getElementById("clickable"+id.toString());
+        const offerList = document.getElementById("offerList"+id.toString());
+        const url = "http://localhost:8080/details/all/" + id.toString()
+        const allInquiries = [];
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                for (let d of data) {
+                    allInquiries.push(d);
+                }
+            });
+
+        searchBar.addEventListener('click', (e) => {
+            let x = document.getElementById("offerList"+id.toString());
+            if (x.className === "col-12") {
+                displayOffers(allInquiries);
+                x.className += " show";
+            } else {
+                x.className = "col-12"
+                clearOffers(allInquiries);
+            }
+        })
+
+        const clearOffers = (offers) =>{
+            offerList.innerHTML = offers
+                .map((a) => {
+                    return ` `
+                })
+                .join('');
+        }
+
+
+        const displayOffers = (offers) => {
+            offerList.innerHTML = offers
+                .map((a) => {
+                    return `<div class="card ts-item ts-card ts-item__lg" id="inquiries2" style="margin-bottom: 60px">
+                             <div class="card-body">
+                                <figure class="ts-item__info" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%)">
+                                    <h4>Inquiry ID: ${a.id}</h4>
+                                </figure>
+                                <div class="ts-description-lists">
+                                    <dl>
+                                        <dt>Full name</dt>
+                                        <dd>${a.firstName} ${a.lastName}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Phone number</dt>
+                                        <dd>${a.phoneNumber}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Email</dt>
+                                        <dd>${a.email}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Contact hour</dt>
+                                        <dd>${a.contactHour}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Message</dt>
+                                        <dd>${a.description}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                </div>`
+                })
+                .join('');
+        }
+    }
+</script>
 </body>
 </html>

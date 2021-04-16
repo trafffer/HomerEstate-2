@@ -67,6 +67,17 @@ public class UserServiceTest {
     }
 
     @Test
+    public void testEmailExist(){
+        UserEntity user = new UserEntity();
+        user.setEmail("Nasko").setId(1L);
+        Mockito.when(mockUserRepository.findByEmail("Nasko")).thenReturn(Optional.of(user));
+        boolean actual = serviceToBeTested.emailExist("Nasko");
+        Assertions.assertTrue(actual);
+
+    }
+
+
+    @Test
     public void testChangeRole(){
         UserRoleEntity role = new UserRoleEntity();
         role.setRole(UserRole.USER);

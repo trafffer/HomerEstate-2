@@ -17,5 +17,5 @@ public interface UserService {
     List<String> findAllUsernames();
     void changeRole(String username, String role);
     UserViewModel loadViewModel();
-
+    void editUser(UserServiceModel userServiceModel);
 }

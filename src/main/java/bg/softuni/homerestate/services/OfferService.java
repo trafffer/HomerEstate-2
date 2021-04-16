@@ -23,4 +23,5 @@ public interface OfferService {
     List<OfferViewModel> findAll();
     List<OfferViewModel>customSearch(SearchBindingModel model);
     void editOffer(OfferServiceModel serviceModel, Long id);
+    List<OfferViewModel> getOfferByAuthor();
 }

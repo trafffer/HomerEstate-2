@@ -120,4 +120,21 @@ public class UserServiceImpl implements UserService {
         UserEntity user = getUser();
        return mapper.map(user,UserViewModel.class);
     }
+
+    @Override
+    public void editUser(UserServiceModel userServiceModel) {
+        UserEntity user = getUser();
+        user.setUsername(userServiceModel.getUsername())
+                .setPassword(encoder.encode(userServiceModel.getPassword()))
+                .setFullName(userServiceModel.getFullName())
+                .setEmail(userServiceModel.getEmail());
+        userRepository.save(user);
+        UserDetails principal = homerDBUserService.loadUserByUsername(user.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                principal,
+                user.getPassword(),
+                principal.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }

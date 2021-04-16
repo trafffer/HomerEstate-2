@@ -272,14 +272,8 @@
                         <div th:each="c : ${commentsList}" th:object="${c}" class="input-group mb-3">
                             <label th:text="|Added by *{authorUsername} on *{createdOn}|"></label>
                             <div th:text="*{textContent}"  id="comment"  type="text"
-                                   class="form-control validate col-xl-10 col-lg-10 col-md-10 col-sm-10"
+                                   class="form-control validate col-xl-12 col-lg-12 col-md-12 col-sm-12"
                             style="border-radius: 0.185rem">
-                            </div>
-                            <div sec:authorize="hasRole('ROLE_ADMIN')"
-                                    th:text="|Delete|"  id="visit" type="text"
-                                   class="form-control validate col-xl-2 col-lg-2 col-md-2 col-sm-2"
-                                   style="border-radius: 0.185rem;background-color: #dd0b35;">
-<!--                                TODO: to implement logic about comment delete-->
                             </div>
                         </div>
                     </section>

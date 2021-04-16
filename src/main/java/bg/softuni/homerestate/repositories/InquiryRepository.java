@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
-    List<Inquiry>findAllByOfferId(Long id);
+    List<Inquiry>findAllByOfferIdOrderByCreatedOnDesc(Long id);
 }

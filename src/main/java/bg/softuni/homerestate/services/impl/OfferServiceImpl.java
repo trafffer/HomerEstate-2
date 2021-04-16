@@ -131,6 +131,13 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.save(offer);
     }
 
+    @Override
+    public List<OfferViewModel> getOfferByAuthor() {
+        List<Offer> offers = offerRepository.findAllByAuthorOrderByVisitedDesc(userService.getUser());
+        List<OfferServiceModel> serviceModels = collectOfferServiceModels(offers);
+        return mapToOfferViewModel(serviceModels);
+    }
+
     private List<OfferServiceModel> collectOfferServiceModels(List<Offer>models) {
         return models.stream().map(o -> {
             OfferServiceModel model = mapper.map(o, OfferServiceModel.class);
