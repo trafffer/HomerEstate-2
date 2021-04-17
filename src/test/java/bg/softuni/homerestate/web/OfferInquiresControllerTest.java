@@ -1,15 +1,10 @@
 package bg.softuni.homerestate.web;
 
-import bg.softuni.homerestate.models.entities.CategoryEntity;
-import bg.softuni.homerestate.models.entities.Offer;
-import bg.softuni.homerestate.models.entities.UserEntity;
-import bg.softuni.homerestate.models.entities.UserRoleEntity;
-import bg.softuni.homerestate.models.entities.enums.Category;
-import bg.softuni.homerestate.models.entities.enums.City;
-import bg.softuni.homerestate.models.entities.enums.Type;
-import bg.softuni.homerestate.models.entities.enums.UserRole;
+import bg.softuni.homerestate.models.entities.*;
+import bg.softuni.homerestate.models.entities.enums.*;
+import bg.softuni.homerestate.models.view.InquiryViewModel;
 import bg.softuni.homerestate.repositories.*;
-import bg.softuni.homerestate.services.OfferService;
+import bg.softuni.homerestate.services.InquiryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,21 +18,19 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SearchControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+public class OfferInquiresControllerTest {
 
     @Autowired
-    private OfferService offerService;
+    private InquiryService inquiryService;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     private OfferRepository repository;
@@ -51,10 +44,12 @@ public class SearchControllerTest {
     @Autowired
     private UserRoleRepository repository4;
 
-
+    @Autowired
+    private InquiryRepository repository5;
 
     @BeforeEach
     public void setUp(){
+        repository5.deleteAll();
         repository.deleteAll();
         repository2.deleteAll();
         repository3.deleteAll();
@@ -69,43 +64,52 @@ public class SearchControllerTest {
         CategoryEntity category = new CategoryEntity().setName(Category.HOUSE);
         repository3.save(category);
         Offer offer = new Offer();
-        offer.setCategory(category).setFloor(1).setRooms(2).setDescription("ttttt")
+        offer.setId(1L);
+                offer.setCategory(category).setFloor(1).setRooms(2).setDescription("ttttt")
                 .setArea(144).setCity(City.BLAGOEVGRAD).setType(Type.SALE)
                 .setImgUrl("this-image").setCreatedOn(LocalDateTime.now())
                 .setVisited(0)
                 .setPrice(BigDecimal.valueOf(144000)).setAuthor(author)
-                .setAddress("address45").setPricePerSqM(BigDecimal.valueOf(1445.55)).setId(0L);
-        Offer offer2 = repository.save(offer);
+                .setAddress("address45").setPricePerSqM(BigDecimal.valueOf(1445.55));
+        Offer offer1= repository.save(offer);
+        Inquiry inquiry= new Inquiry();
+        inquiry.setCreatedOn(LocalDateTime.now()).setContactHour(ContactHours.EVENING)
+                .setOffer(offer1).setDescription("here").setEmail("email").setFirstName("nasko")
+                .setLastName("gosho").setPhoneNumber("089577719");
+        repository5.save(inquiry);
     }
 
     @AfterEach
     public void tearDown(){
+        repository5.deleteAll();
         repository.deleteAll();
         repository2.deleteAll();
         repository3.deleteAll();
         repository4.deleteAll();
     }
 
-
     @Test
     @WithMockUser(username = "pesho",roles = {"USER","ADMIN"})
     public void testFindAll() throws Exception {
-        mockMvc.perform(get("/currency/api"))
+        mockMvc.perform(get("/details/all/1"))
                 .andExpect(status().isOk());
     }
     @Test
     @WithMockUser(username = "pesho",roles = {"USER","ADMIN"})
     public void testNotFound() throws Exception {
-        mockMvc.perform(get("/currency/apitttt"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/details/all/4"))
+                .andExpect(jsonPath("$",hasSize(0)));
     }
-
     @Test
     @WithMockUser(username = "pesho",roles = {"USER","ADMIN"})
     public void testBody() throws Exception {
-        mockMvc.perform(get("/currency/api"))
+        Long id = repository.findAll().stream().findFirst().get().getId();
+        mockMvc.perform(get("/details/all/"+id))
                 .andExpect(jsonPath("$",hasSize(1)))
-                .andExpect(jsonPath("$.[0].address",is("address45")));
+                .andExpect(jsonPath("$.[0].firstName",is("nasko")));
 
     }
+
+
+
 }

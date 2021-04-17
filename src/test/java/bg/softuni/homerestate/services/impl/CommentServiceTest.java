@@ -8,6 +8,7 @@ import bg.softuni.homerestate.models.entities.enums.UserRole;
 import bg.softuni.homerestate.models.service.CommentServiceModel;
 import bg.softuni.homerestate.models.view.CommentViewModel;
 import bg.softuni.homerestate.repositories.CommentRepository;
+import bg.softuni.homerestate.services.InquiryService;
 import bg.softuni.homerestate.services.OfferService;
 import bg.softuni.homerestate.services.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -35,6 +36,8 @@ public class CommentServiceTest {
     @Mock
     CommentRepository mockCommentRepository;
     @Mock
+    InquiryService mockInquireService;
+    @Mock
     OfferService mockOfferService;
     @Mock
     UserService mockUserService;
@@ -44,7 +47,8 @@ public class CommentServiceTest {
     @BeforeEach
     public void setUp() {
         serviceToBeTested =
-                new CommentServiceImpl(mockCommentRepository, mapper, mockOfferService, mockUserService);
+                new CommentServiceImpl(mockCommentRepository, mapper,
+                        mockOfferService, mockUserService, mockInquireService);
     }
 
     @Test
@@ -149,6 +153,7 @@ public class CommentServiceTest {
     public void testDeleteById(){
         serviceToBeTested.deleteById(0L);
         Mockito.verify(mockCommentRepository, times(1)).deleteByOfferId(0L);
+        Mockito.verify(mockInquireService,times(1)).deleteByOfferId(0L);
         Mockito.verify(mockOfferService,times(1)).deleteOffer(0L);
     }
 

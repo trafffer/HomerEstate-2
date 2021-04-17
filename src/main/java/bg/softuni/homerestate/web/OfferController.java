@@ -40,6 +40,7 @@ public class OfferController {
     @ModelAttribute("offerModel")
     public OfferAddBindingModel model(Model model){
         model.addAttribute("noPictures",false);
+        model.addAttribute("noType",false);
     return new OfferAddBindingModel();
     }
 
@@ -89,6 +90,7 @@ public class OfferController {
                                    RedirectAttributes redirectAttributes) throws IOException {
         MultipartFile optionalFile = files.stream().findFirst().get();
         if (optionalFile.getSize()!=0){
+            System.out.println("there are pictures");
             List<String> images = getCollect(files);
             offerModel.setImgUrl(images);
         } else {
@@ -98,15 +100,12 @@ public class OfferController {
             redirectAttributes.addFlashAttribute("noType",true);
         }
         if (bindingResult.hasErrors()||optionalFile.getSize()==0){
-            System.out.println("binding result has errors");
             redirectAttributes.addFlashAttribute("offerModel",offerModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel",bindingResult);
             return "redirect:/offers/edit/{id}";
         }
-        System.out.printf("Offers id is %d%n",id);
         OfferServiceModel serviceModel = mapper.map(offerModel,OfferServiceModel.class);
         offerService.editOffer(serviceModel,id);
-        System.out.println("editing offer");
         return "redirect:/";
     }
 

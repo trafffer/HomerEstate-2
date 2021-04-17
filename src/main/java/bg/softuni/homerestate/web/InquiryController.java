@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/inquiries")
@@ -34,7 +34,6 @@ public class InquiryController {
     @GetMapping("/add")
     public String addInquiry(Model model){
         model.addAttribute("offers",offerService.getOfferByAuthor());
-        model.addAttribute("inquiries",inquiryService.loadViewModels(3L));
         return "inquiries";
     }
 

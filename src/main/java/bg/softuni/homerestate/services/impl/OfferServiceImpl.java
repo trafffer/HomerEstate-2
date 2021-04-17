@@ -126,7 +126,7 @@ public class OfferServiceImpl implements OfferService {
                 .setFloor(serviceModel.getFloor())
                 .setRooms(serviceModel.getRooms())
                 .setDescription(serviceModel.getDescription())
-                .setImgUrl(String.join(",", serviceModel.getImgUrl()))
+                .setImgUrl(serviceModel.getImgUrl().toString())
                 .setPricePerSqM(getPricePerArea(serviceModel));
         offerRepository.save(offer);
     }

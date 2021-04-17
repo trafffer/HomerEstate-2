@@ -5,6 +5,7 @@ import bg.softuni.homerestate.models.service.CommentServiceModel;
 import bg.softuni.homerestate.models.view.CommentViewModel;
 import bg.softuni.homerestate.repositories.CommentRepository;
 import bg.softuni.homerestate.services.CommentService;
+import bg.softuni.homerestate.services.InquiryService;
 import bg.softuni.homerestate.services.OfferService;
 import bg.softuni.homerestate.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -23,12 +24,14 @@ public class CommentServiceImpl implements CommentService {
     private final ModelMapper mapper;
     private final OfferService offerService;
     private final UserService userService;
+    private final InquiryService inquiryService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, ModelMapper mapper, OfferService offerService, UserService userService) {
+    public CommentServiceImpl(CommentRepository commentRepository, ModelMapper mapper, OfferService offerService, UserService userService, InquiryService inquiryService) {
         this.commentRepository = commentRepository;
         this.mapper = mapper;
         this.offerService = offerService;
         this.userService = userService;
+        this.inquiryService = inquiryService;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void deleteById(Long id) {
         commentRepository.deleteByOfferId(id);
+        inquiryService.deleteByOfferId(id);
         offerService.deleteOffer(id);
     }
 

@@ -48,4 +48,12 @@ public class InquiryServiceImpl implements InquiryService {
             return viewModel;})
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteByOfferId(Long id) {
+        List<Inquiry>inquiries = inquiryRepository.findAllByOfferIdOrderByCreatedOnDesc(id);
+        for (Inquiry inquiry : inquiries) {
+            inquiryRepository.deleteById(inquiry.getId());
+        }
+    }
 }
