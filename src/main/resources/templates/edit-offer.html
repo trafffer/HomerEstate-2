@@ -181,7 +181,7 @@
                     <h3 class="border-bottom" >New attributes</h3>
                     <section id="submit-form" style="margin-bottom:0">
                       <form method="POST" th:action="@{/offers/edit/{id}(id=${viewModel.id})}"
-                         th:object="${offerModel}" class="ts-form custom-form" enctype="multipart/form-data" >
+                         th:object="${offerEditModel}" class="ts-form custom-form" enctype="multipart/form-data" >
                         <section id="basic-information" class="" style="margin-bottom:1rem;">
                             <div class="row">
                                 <div class="form-group alt" style="margin-left: 20px">
@@ -205,11 +205,6 @@
                                                            th:value="RENT">
                                                     <label class="custom-control-label" for="typeRent">Rental</label>
                                                 </div>
-                                                <small th:if="${noType}"
-                                                       class="text-light form-text bg-danger rounded"
-                                                       th:errors="*{type}">
-                                                    Neshto gadno.
-                                                </small>
                                             </div>
                                         </div>
                                 </div>
@@ -240,7 +235,6 @@
                                     <div class="input-group">
                                         <label for="newPrice" class="col-form-label text-dark">Price*</label>
                                        <input th:field="*{price}"
-                                           th:value="*{price}"
                                            th:errorclass="is-invalid"
                                            class="form-control border-right-0"
                                               placeholder="Price"
@@ -371,11 +365,6 @@
                                             <label class="control-label" for="files">Upload new pictures:</label>
                                             <input type="file" class="form-control" id="files"
                                                    placeholder="Upload Images" name="files" multiple/>
-                                            <small th:if="${noPictures}"
-                                                   class="text-light form-text bg-danger rounded"
-                                                   th:text="|You must select pictures!|">
-                                                Neshto gadno.
-                                            </small>
                                         </div>
                                         <button type="submit" class="btn btn-primary ts-btn-arrow btn-lg float-right"
                                                 id="btnSubmit" name="button" value="add this form"

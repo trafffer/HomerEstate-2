@@ -1,24 +1,23 @@
 package bg.softuni.homerestate.web;
 
 import bg.softuni.homerestate.models.binding.OfferAddBindingModel;
+import bg.softuni.homerestate.models.binding.OfferEditBindingModel;
 import bg.softuni.homerestate.models.entities.enums.Category;
 import bg.softuni.homerestate.models.entities.enums.City;
 import bg.softuni.homerestate.models.service.OfferServiceModel;
+import bg.softuni.homerestate.models.view.OfferDetailsViewModel;
 import bg.softuni.homerestate.services.CloudinaryService;
 import bg.softuni.homerestate.services.OfferService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +42,6 @@ public class OfferController {
         model.addAttribute("noType",false);
     return new OfferAddBindingModel();
     }
-
 
     @GetMapping("/add")
     public String addOffer(Model model){
@@ -78,32 +76,36 @@ public class OfferController {
 
     @GetMapping("/edit/{id}")
     public String editOffer(@PathVariable("id") Long id, Model model){
-         model.addAttribute("viewModel",offerService.getOffer(id));
-        offerSetUp(model);
+        model.addAttribute("categories", Category.values());
+        model.addAttribute("cities", City.values());
+        model.addAttribute("viewModel",offerService.getOffer(id));
         return "edit-offer";
+    }
+
+    @ModelAttribute("offerEditModel")
+    public OfferEditBindingModel editModel(@PathVariable("id") Long id){
+        System.out.println("pre-setup");
+        return mapper.map(offerService.getOffer(id), OfferEditBindingModel.class);
     }
 
     @PostMapping("/edit/{id}")
     public String editOfferConfirm(@PathVariable("id") Long id, @RequestParam("files") List<MultipartFile> files,
-                                   @Valid @ModelAttribute("offerModel") OfferAddBindingModel offerModel,
+                                   @Valid @ModelAttribute("offerEditModel") OfferEditBindingModel offerModel,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes) throws IOException {
+                                   RedirectAttributes redirectAttributes)  {
         MultipartFile optionalFile = files.stream().findFirst().get();
         if (optionalFile.getSize()!=0){
             System.out.println("there are pictures");
             List<String> images = getCollect(files);
             offerModel.setImgUrl(images);
-        } else {
-            redirectAttributes.addFlashAttribute("noPictures", true);
         }
-        if (offerModel.getType()==null){
-            redirectAttributes.addFlashAttribute("noType",true);
-        }
-        if (bindingResult.hasErrors()||optionalFile.getSize()==0){
-            redirectAttributes.addFlashAttribute("offerModel",offerModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel",bindingResult);
+        if (bindingResult.hasErrors()){
+            System.out.println("binding result has errors");
+            redirectAttributes.addFlashAttribute("offerEditModel",offerModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerEditModel",bindingResult);
             return "redirect:/offers/edit/{id}";
         }
+        System.out.println("binding result doesn't have errors");
         OfferServiceModel serviceModel = mapper.map(offerModel,OfferServiceModel.class);
         offerService.editOffer(serviceModel,id);
         return "redirect:/";
@@ -129,6 +131,4 @@ public class OfferController {
         model.addAttribute("categories", Category.values());
         model.addAttribute("cities", City.values());
     }
-
-
 }

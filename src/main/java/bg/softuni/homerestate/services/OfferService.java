@@ -1,6 +1,7 @@
 package bg.softuni.homerestate.services;
 
 import bg.softuni.homerestate.models.binding.OfferAddBindingModel;
+import bg.softuni.homerestate.models.binding.OfferEditBindingModel;
 import bg.softuni.homerestate.models.binding.SearchBindingModel;
 import bg.softuni.homerestate.models.entities.CategoryEntity;
 import bg.softuni.homerestate.models.entities.Offer;
@@ -24,4 +25,5 @@ public interface OfferService {
     List<OfferViewModel>customSearch(SearchBindingModel model);
     void editOffer(OfferServiceModel serviceModel, Long id);
     List<OfferViewModel> getOfferByAuthor();
+//    OfferEditBindingModel prePopulateList(OfferEditBindingModel offerModel, Long id);
 }

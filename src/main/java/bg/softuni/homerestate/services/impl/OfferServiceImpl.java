@@ -1,5 +1,6 @@
 package bg.softuni.homerestate.services.impl;
 
+import bg.softuni.homerestate.models.binding.OfferEditBindingModel;
 import bg.softuni.homerestate.models.binding.SearchBindingModel;
 import bg.softuni.homerestate.models.entities.CategoryEntity;
 import bg.softuni.homerestate.models.entities.Offer;
@@ -137,6 +138,40 @@ public class OfferServiceImpl implements OfferService {
         List<OfferServiceModel> serviceModels = collectOfferServiceModels(offers);
         return mapToOfferViewModel(serviceModels);
     }
+
+//    @Override
+//    public OfferEditBindingModel prePopulateList(OfferEditBindingModel offerModel, Long id) {
+//        Offer offerEntity = getOfferEntity(id);
+//        OfferServiceModel offer = mapper.map(offerEntity,OfferServiceModel.class);
+//        offer.setCategory(offerEntity.getCategory().getName());
+////        TODO: To remake the address validation to accept null values
+//        if (offerModel.getAddress().equals("")){
+//            offerModel.setAddress(offer.getAddress());
+//        }
+//        if (offerModel.getArea()==null){
+//            offerModel.setArea(offer.getArea());
+//        }
+//        if (offerModel.getCategory()==null){
+//            offerModel.setCategory(offer.getCategory());
+//        }
+//        if (offerModel.getCity()==null){
+//            offerModel.setCity(offer.getCity());
+//        }
+////        TODO: to remake description validation to accept null values
+//        if (offerModel.getDescription().equals("")){
+//            offerModel.setDescription(offer.getDescription());
+//        }
+//        if (offerModel.getFloor()==null){
+//            offerModel.setFloor(offer.getFloor());
+//        }
+//        if (offerModel.getPrice()==null){
+//            offerModel.setPrice(offer.getPrice());
+//        }
+//        if (offerModel.getRooms()==null){
+//            offerModel.setRooms(offer.getRooms());
+//        }
+//        return offerModel;
+//    }
 
     private List<OfferServiceModel> collectOfferServiceModels(List<Offer>models) {
         return models.stream().map(o -> {
