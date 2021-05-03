@@ -1,11 +1,9 @@
 package bg.softuni.homerestate.web;
 
 import bg.softuni.homerestate.models.binding.OfferAddBindingModel;
-import bg.softuni.homerestate.models.binding.OfferEditBindingModel;
 import bg.softuni.homerestate.models.entities.enums.Category;
 import bg.softuni.homerestate.models.entities.enums.City;
 import bg.softuni.homerestate.models.service.OfferServiceModel;
-import bg.softuni.homerestate.models.view.OfferDetailsViewModel;
 import bg.softuni.homerestate.services.CloudinaryService;
 import bg.softuni.homerestate.services.OfferService;
 import org.modelmapper.ModelMapper;
@@ -83,14 +81,14 @@ public class OfferController {
     }
 
     @ModelAttribute("offerEditModel")
-    public OfferEditBindingModel editModel(@PathVariable("id") Long id){
+    public OfferAddBindingModel editModel(@PathVariable("id") Long id){
         System.out.println("pre-setup");
-        return mapper.map(offerService.getOffer(id), OfferEditBindingModel.class);
+        return mapper.map(offerService.getOffer(id), OfferAddBindingModel.class);
     }
 
     @PostMapping("/edit/{id}")
     public String editOfferConfirm(@PathVariable("id") Long id, @RequestParam("files") List<MultipartFile> files,
-                                   @Valid @ModelAttribute("offerEditModel") OfferEditBindingModel offerModel,
+                                   @Valid @ModelAttribute("offerEditModel") OfferAddBindingModel offerModel,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes)  {
         MultipartFile optionalFile = files.stream().findFirst().get();

@@ -1,6 +1,5 @@
 package bg.softuni.homerestate.services.impl;
 
-import bg.softuni.homerestate.models.binding.OfferEditBindingModel;
 import bg.softuni.homerestate.models.binding.SearchBindingModel;
 import bg.softuni.homerestate.models.entities.CategoryEntity;
 import bg.softuni.homerestate.models.entities.Offer;
@@ -11,9 +10,12 @@ import bg.softuni.homerestate.models.service.OfferServiceModel;
 import bg.softuni.homerestate.models.view.OfferDetailsViewModel;
 import bg.softuni.homerestate.models.view.OfferViewModel;
 import bg.softuni.homerestate.repositories.OfferRepository;
-import bg.softuni.homerestate.services.*;
+import bg.softuni.homerestate.services.CategoryService;
+import bg.softuni.homerestate.services.OfferService;
+import bg.softuni.homerestate.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
