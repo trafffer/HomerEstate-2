@@ -208,6 +208,8 @@
                                             </div>
                                         </div>
                                 </div>
+
+<!--                                TODO: To fix showing prepopulated data...-->
                                 <div class="col-sm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2px">
                                     <div class="form-group">
                                         <label for="category" class="col-form-label text-dark">Category*</label>
@@ -233,12 +235,12 @@
                                   </div>
                                 <div class="col-sm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2px">
                                     <div class="input-group">
-                                        <label for="newPrice" class="col-form-label text-dark">Price*</label>
+                                        <label for="price" class="col-form-label text-dark">Price*</label>
                                        <input th:field="*{price}"
                                            th:errorclass="is-invalid"
                                            class="form-control border-right-0"
                                               placeholder="Price"
-                                              name="newPrice" type="text" id="newPrice">
+                                              name="price" type="text" id="price">
                                        <div class="input-group-append">
                                          <span class="input-group-text bg-white border-left-0">€</span>
                                        </div>
