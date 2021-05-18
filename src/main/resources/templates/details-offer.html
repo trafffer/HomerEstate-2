@@ -26,7 +26,9 @@
 
             </div>
             <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
-                <span th:each="p : *{imgUrl}" class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1"></span>
+                <span th:each="p : *{imgUrl}"
+                      class="swiper-pagination-bullet swiper-pagination-bullet-active"
+                      tabindex="0" role="button" aria-label="Go to slide 1" onclick="currentSlide()"></span>
                 </div>
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
     </section>
@@ -286,5 +288,6 @@
 </main>
 <footer th:replace="~{fragments/fragment::footer}">
 </footer>
+<script th:src="@{js/carousel.js}"></script>
 </body>
 </html>
