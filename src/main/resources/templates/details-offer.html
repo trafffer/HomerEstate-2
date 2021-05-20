@@ -14,8 +14,8 @@
      =========================================================================================================-->
     <section id="gallery-carousel" class="" style="margin-bottom:10px;">
         <div class="swiper-container ts-gallery-carousel ts-gallery-carousel__multi details-custom-slider swiper-container-initialized swiper-container-horizontal swiper-container-free-mode show">
-           <div class="swiper-wrapper row" style="transform: translate3d(0px, 0px, 0px);">
-               <div class="swiper-slide swiper-slide col"
+           <div class="carousell__track row">
+               <div class="col swiper-slide swiper-slide"
                    th:each="p : *{imgUrl}" style="margin-right: 20px;">
                    <a th:href="${p}" class="popup-image" style="display: block">
                        <img class="carousell__image" th:src="${p}" alt="">
@@ -316,6 +316,6 @@
 </main>
 <footer th:replace="~{fragments/fragment::footer}">
 </footer>
-<script src="/js/carousel.js"></script>
+<script src="/js/newCarousel.js"></script>
 </body>
 </html>
