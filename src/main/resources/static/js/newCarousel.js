@@ -1,15 +1,27 @@
 const track = document.querySelector('.carousell__track');
-const slides = Array.from(track.children);
+const slides = Array.from(document.getElementsByClassName('carousell__slide'));
 const indicator = document.querySelector('.carousell__nav')
 const dots = Array.from(indicator.children);
-const slideWidth = slides[0].getBoundingClientRect().width;
 
-const setSlidePosition =  (slide,index)=> {
-    slide.style.width = screen.availWidth*0.3 + 'px';
-    slide.style.left = slideWidth * index + 'px';
-};
 
 slides.forEach(setSlidePosition);
+
+
+function setSlidePosition(slide,index){
+    let width = 0;
+    for (let i=1;i<=index;i++){
+        width+=slideLeft(i-1);
+    }
+    slide.style.left = width + 'px';
+    console.log(index);
+}
+
+function slideLeft(index) {
+    let as =  slides[index].clientWidth;
+    console.log(as);
+    return as;
+}
+
 
 let a = 0;
 if (a===0) {
@@ -17,8 +29,6 @@ if (a===0) {
     dots[0].className += ' current-dot';
     a++;
 }
-
-
 
 const moveToSlide = (track, currentSlide, targetSlide)=>{
     track.style.transform = 'translateX(-' +targetSlide.style.left;
