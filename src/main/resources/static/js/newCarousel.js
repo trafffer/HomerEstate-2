@@ -3,9 +3,9 @@ const slides = Array.from(document.getElementsByClassName('carousell__slide'));
 const indicator = document.querySelector('.carousell__nav')
 const dots = Array.from(indicator.children);
 
-
-slides.forEach(setSlidePosition);
-
+window.onload = function () {
+    slides.forEach(setSlidePosition);
+};
 
 function setSlidePosition(slide,index){
     let width = 0;
@@ -13,13 +13,10 @@ function setSlidePosition(slide,index){
         width+=slideLeft(i-1);
     }
     slide.style.left = width + 'px';
-    console.log(index);
 }
 
 function slideLeft(index) {
-    let as =  slides[index].clientWidth;
-    console.log(as);
-    return as;
+    return slides[index].clientWidth;
 }
 
 
