@@ -10,9 +10,12 @@ import bg.softuni.homerestate.models.service.OfferServiceModel;
 import bg.softuni.homerestate.models.view.OfferDetailsViewModel;
 import bg.softuni.homerestate.models.view.OfferViewModel;
 import bg.softuni.homerestate.repositories.OfferRepository;
-import bg.softuni.homerestate.services.*;
+import bg.softuni.homerestate.services.CategoryService;
+import bg.softuni.homerestate.services.OfferService;
+import bg.softuni.homerestate.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -94,7 +97,6 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(Long id) {
         offerRepository.deleteById(id);
-
     }
 
     @Override
@@ -114,6 +116,31 @@ public class OfferServiceImpl implements OfferService {
        List<OfferServiceModel> models = collectOfferServiceModels(offers);
        return mapToOfferViewModel(models);
     }
+
+    @Override
+    public void editOffer(OfferServiceModel serviceModel, Long id) {
+        Offer offer = getOfferEntity(id);
+        offer.setType(serviceModel.getType())
+                .setCategory(getCategory(serviceModel.getCategory()))
+                .setPrice(serviceModel.getPrice())
+                .setCity(serviceModel.getCity())
+                .setAddress(serviceModel.getAddress())
+                .setArea(serviceModel.getArea())
+                .setFloor(serviceModel.getFloor())
+                .setRooms(serviceModel.getRooms())
+                .setDescription(serviceModel.getDescription())
+                .setImgUrl(serviceModel.getImgUrl().toString())
+                .setPricePerSqM(getPricePerArea(serviceModel));
+        offerRepository.save(offer);
+    }
+
+    @Override
+    public List<OfferViewModel> getOfferByAuthor() {
+        List<Offer> offers = offerRepository.findAllByAuthorOrderByVisitedDesc(userService.getUser());
+        List<OfferServiceModel> serviceModels = collectOfferServiceModels(offers);
+        return mapToOfferViewModel(serviceModels);
+    }
+
 
     private List<OfferServiceModel> collectOfferServiceModels(List<Offer>models) {
         return models.stream().map(o -> {
